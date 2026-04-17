@@ -66,6 +66,12 @@ curl -H "X-API-Key: $API_KEY" \
 
 Railway không chạy `docker-compose.yml` trực tiếp như local. Theo tài liệu Railway hiện tại, mỗi service trong Compose cần map sang một Railway service riêng, hoặc app phải tự chạy được như một service độc lập. Repo này đã được chỉnh để chạy ổn trên Railway ngay cả khi chưa gắn Redis: app sẽ fallback sang in-memory store cho rate limit và cost guard.
 
+### Live URL
+
+- App: https://vinunilab12-production.up.railway.app/
+- Health: https://vinunilab12-production.up.railway.app/health
+- Ready: https://vinunilab12-production.up.railway.app/ready
+
 ```bash
 # Cài Railway CLI
 npm i -g @railway/cli
