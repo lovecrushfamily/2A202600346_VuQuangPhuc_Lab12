@@ -64,20 +64,32 @@ curl -H "X-API-Key: $API_KEY" \
 
 ## Deploy Railway (< 5 phút)
 
+Railway không chạy `docker-compose.yml` trực tiếp như local. Theo tài liệu Railway hiện tại, mỗi service trong Compose cần map sang một Railway service riêng, hoặc app phải tự chạy được như một service độc lập. Repo này đã được chỉnh để chạy ổn trên Railway ngay cả khi chưa gắn Redis: app sẽ fallback sang in-memory store cho rate limit và cost guard.
+
 ```bash
 # Cài Railway CLI
 npm i -g @railway/cli
 
-# Login và deploy
+# Login và deploy app service
 railway login
 railway init
 railway variables set OPENAI_API_KEY=sk-...
 railway variables set AGENT_API_KEY=your-secret-key
+railway variables set JWT_SECRET=your-jwt-secret
+railway variables set ENVIRONMENT=production
 railway up
 
 # Nhận public URL!
 railway domain
 ```
+
+### Nếu muốn giữ Redis trên Railway
+
+1. Tạo thêm Redis service trong cùng Railway project
+2. Copy/reference biến `REDIS_URL` sang service app
+3. Redeploy app
+
+Nếu chưa có Redis, app vẫn chạy được. Nếu có Redis, rate limiting và budget tracking sẽ dùng Redis tự động.
 
 ---
 
